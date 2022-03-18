@@ -35,70 +35,70 @@ const searchBtn = document.getElementById("search-btn");
 const movies = [];
 
 const renderMovies = (filter = "") => {
-  const movieList = document.getElementById("movie-list");
+    const movieList = document.getElementById("movie-list");
 
-  if (movies.length === 0) {
-    movieList.classList.remove("visible");
-  } else {
-    movieList.classList.add("visible");
-  }
-  movieList.innerHTML = "";
-
-  const filteredMovies = !filter
-    ? movies
-    : movies.filter((m => m.info.title.includes(filter)));
-
-  filteredMovies.forEach((movie) => {
-    const movieEl = document.createElement("li");
-    if(!('info' in movie )){   // other way if(movie.info===undefined)
-        // checking the property is available or not in the object
+    if (movies.length === 0) {
+        movieList.classList.remove("visible");
+    } else {
+        movieList.classList.add("visible");
     }
-    // movieEl.textContent=movie.info.title;
-    const{info,...otherProps}=movie; //object detructuring
-    console.log(otherProps);
-    //const{title:movieTitle}=info; //movieTitle is the user defined objec destructuring
-    let {getFormattedTitle}=movie;
-    getFormattedTitle=getFormattedTitle.bind(movie);  //future purpose
-    // let text = getFormattedTitle.call(movie,,) + "-";  //rightaway purpose parameters type differes btw apply and call
-    //let text = getFormattedTitle.apply(movie,[]) + "-";  //rightaway purpose
-    for (const key in info) {
-      if (key !== "title") {
-        text = text + `${key}:${info[key]}`;
-      }
-    }
-    movieEl.textContent = text;
-    movieList.append(movieEl);
-  });
+    movieList.innerHTML = "";
+
+    const filteredMovies = !filter
+        ? movies
+        : movies.filter((m => m.info.title.includes(filter)));
+
+    filteredMovies.forEach((movie) => {
+        const movieEl = document.createElement("li");
+        if (!('info' in movie)) {   // other way if(movie.info===undefined)
+            // checking the property is available or not in the object
+        }
+        // movieEl.textContent=movie.info.title;
+        const {info, ...otherProps} = movie; //object detructuring
+        console.log(otherProps);
+        //const{title:movieTitle}=info; //movieTitle is the user defined objec destructuring
+        let {getFormattedTitle} = movie;
+        getFormattedTitle = getFormattedTitle.bind(movie);  //future purpose
+        // let text = getFormattedTitle.call(movie,,) + "-";  //rightaway purpose parameters type differes btw apply and call
+        //let text = getFormattedTitle.apply(movie,[]) + "-";  //rightaway purpose
+        for (const key in info) {
+            if (key !== "title") {
+                text = text + `${key}:${info[key]}`;
+            }
+        }
+        movieEl.textContent = text;
+        movieList.append(movieEl);
+    });
 };
 
 const addMovieHandler = () => {
-  const title = document.getElementById("title").value;
-  const extraName = document.getElementById("extra-name").value;
-  const extraValue = document.getElementById("extra-value").value;
-  if (
-    title.trim() === "" ||
-    extraName.trim() === "" ||
-    extraValue.trim() === ""
-  ) {
-    return;
-  }
-  const newMovie = {
-    info: {
-      title, //key name and value name is same use like this to set the properties
-      [extraName]: extraValue,
-    },
-    id: Math.random().toString(),
-    getFormattedTitle(){
-       return this.info.title.toUpperCase();
+    const title = document.getElementById("title").value;
+    const extraName = document.getElementById("extra-name").value;
+    const extraValue = document.getElementById("extra-value").value;
+    if (
+        title.trim() === "" ||
+        extraName.trim() === "" ||
+        extraValue.trim() === ""
+    ) {
+        return;
     }
-  };
-  movies.push(newMovie);
-  renderMovies();
+    const newMovie = {
+        info: {
+            title, //key name and value name is same use like this to set the properties
+            [extraName]: extraValue,
+        },
+        id: Math.random().toString(),
+        getFormattedTitle() {
+            return this.info.title.toUpperCase();
+        }
+    };
+    movies.push(newMovie);
+    renderMovies();
 };
 
 const searchMovieHandler = () => {
-  const filterTerm = document.getElementById("filter-title").value;
-  renderMovies(filterTerm);
+    const filterTerm = document.getElementById("filter-title").value;
+    renderMovies(filterTerm);
 };
 
 addMovieBtn.addEventListener("click", addMovieHandler);

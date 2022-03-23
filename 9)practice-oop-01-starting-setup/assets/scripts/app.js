@@ -93,7 +93,7 @@ class ProjectItem {
     );
   }
 
-  updtae(updateProjectListsFn, type) {
+  update(updateProjectListsFn, type) {
     this.updateProjectListsHandler = updateProjectListsFn;
     this.connectSwitchButton();
   }
@@ -117,7 +117,7 @@ class ProjectList {
   addProject(project) {
     this.projects.push(project);
     DOMHelper.moveElement(project.id, `#${this.type}-projects ul`);
-    project.updtae(this.switchProject.bind(this), this.type);
+    project.update(this.switchProject.bind(this), this.type);
   }
   switchProject(projectId) {
     // const projectIndex=this.projects.findIndex(p=>p.id===projectId);
